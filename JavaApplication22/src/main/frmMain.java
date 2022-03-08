@@ -4,20 +4,87 @@
  * and open the template in the editor.
  */
 package main;
-
-/**
- *
- * @author migu_
- */
+import java.util.logging.Level;
+import java.util.logging.Logger;
+/* @author */
 public class frmMain extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmMain
-     */
+    Hilo hilo1 = new Hilo();
+    Hilo hilo2 = new Hilo();
+    
     public frmMain() {
         initComponents();
+        hilo1.window = 1;
+        hilo1.start();
+        hilo2.window = 2;
+        hilo2.start();
     }
 
+    public class Hilo extends Thread {
+        public int window = 0;
+        private boolean run = false;
+        public void startRunning(){run = true;}
+        public void stopRunning(){run = false;}
+        public int getRandom(){
+            int random = (int)(Math.random() * 5 + 1);
+            return random;
+        }
+        @Override
+        public void run(){
+        String vocal;
+        int numero;
+            while(window==1){
+                while(run){
+                    if (this.getRandom()==1)
+                        vocal = "a";
+                    else if (this.getRandom()==2)
+                        vocal = "e";
+                    else if (this.getRandom()==3)
+                        vocal = "i";
+                    else if (this.getRandom()==4)
+                        vocal = "o";
+                    else
+                        vocal = "u";
+                    Letra.setText(vocal);
+                    try{
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex){
+                        Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE,null,ex);
+                    }
+                }
+                try{
+                        Thread.sleep(100);
+                } catch (InterruptedException ex){
+                    Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE,null,ex);
+                }
+            }
+            while(window==2){
+                while(run){
+                    if (this.getRandom()==1)
+                        numero = 1;
+                    else if (this.getRandom()==2)
+                        numero = 2;
+                    else if (this.getRandom()==3)
+                        numero = 3;
+                    else if (this.getRandom()==4)
+                        numero = 4;
+                    else
+                        numero = 5;
+                    Numero.setText(String.valueOf(numero));
+                    try{
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex){
+                        Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE,null,ex);
+                    }
+                }
+                try{
+                        Thread.sleep(100);
+                } catch (InterruptedException ex){
+                    Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE,null,ex);
+                }
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,18 +94,18 @@ public class frmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblLetra = new javax.swing.JLabel();
-        lblNumero1 = new javax.swing.JLabel();
+        Letra = new javax.swing.JLabel();
+        Numero = new javax.swing.JLabel();
         btnIniciarNumero = new javax.swing.JButton();
         btnIniciarLetra = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblLetra.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        lblLetra.setText("a");
+        Letra.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        Letra.setText("a");
 
-        lblNumero1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        lblNumero1.setText("0");
+        Numero.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        Numero.setText("0");
 
         btnIniciarNumero.setText("Iniciar");
         btnIniciarNumero.addActionListener(new java.awt.event.ActionListener() {
@@ -60,7 +127,7 @@ public class frmMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblLetra)
+                .addComponent(Letra)
                 .addGap(82, 82, 82))
             .addGroup(layout.createSequentialGroup()
                 .addGap(65, 65, 65)
@@ -71,14 +138,14 @@ public class frmMain extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(83, 83, 83)
-                    .addComponent(lblNumero1)
+                    .addComponent(Numero)
                     .addContainerGap(294, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(80, 80, 80)
-                .addComponent(lblLetra)
+                .addComponent(Letra)
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIniciarNumero)
@@ -87,7 +154,7 @@ public class frmMain extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(78, 78, 78)
-                    .addComponent(lblNumero1)
+                    .addComponent(Numero)
                     .addContainerGap(178, Short.MAX_VALUE)))
         );
 
@@ -95,11 +162,11 @@ public class frmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarNumeroActionPerformed
-        // TODO add your handling code here:
+        hilo2.startRunning();
     }//GEN-LAST:event_btnIniciarNumeroActionPerformed
 
     private void btnIniciarLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarLetraActionPerformed
-        // TODO add your handling code here:
+        hilo1.startRunning();
     }//GEN-LAST:event_btnIniciarLetraActionPerformed
 
     /**
@@ -138,9 +205,9 @@ public class frmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Letra;
+    private javax.swing.JLabel Numero;
     private javax.swing.JButton btnIniciarLetra;
     private javax.swing.JButton btnIniciarNumero;
-    private javax.swing.JLabel lblLetra;
-    private javax.swing.JLabel lblNumero1;
     // End of variables declaration//GEN-END:variables
 }
